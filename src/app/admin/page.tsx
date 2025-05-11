@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -21,8 +22,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Trash2, Filter, CalendarDays, CheckCircle, Clock, Truck, PackageOpen } from "lucide-react";
 import type { Order, PlatterType } from "@/types";
-import { format } from "date-fns-jalali";
+import { format } from "date-fns";
 import { he } from 'date-fns/locale';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Added import for Card components
+import { cn } from "@/lib/utils"; // Added import for cn
+
 
 const initialOrders: Order[] = [
   {
@@ -245,3 +249,4 @@ export default function AdminPage() {
     </div>
   );
 }
+

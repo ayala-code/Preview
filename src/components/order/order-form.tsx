@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +21,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns-jalali"; // For Jalali (Persian/Hebrew) calendar - can be replaced with date-fns for Gregorian
+import { format } from "date-fns"; // Changed from date-fns-jalali
 import { he } from 'date-fns/locale'; // For Hebrew localization with date-fns
 import { CalendarIcon, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
