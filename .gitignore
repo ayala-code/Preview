@@ -43,3 +43,7 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.logpriyuvi-service-account.json
+
+
+# Service account keys
+priyuvi-service-account.json
