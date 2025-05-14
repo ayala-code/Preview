@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@types/caseless": "^0.12.5",
+    "@types/d3-path": "^3.1.1",
+    "@types/d3-time": "^3.0.4",
+    "@types/long": "^4.0.2",
+    "@types/request": "^2.48.12",
+    "@types/shimmer": "^1.2.0",
+    "@types/tough-cookie": "^4.0.5",
+    "@types/yauzl": "^2.10.3"
+  }
+}
