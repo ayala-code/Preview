@@ -1,45 +1,94 @@
-import { Leaf, Gift, Truck, Palette, CheckCircle } from 'lucide-react'; // Using Leaf for fresh fruits
+import { Box, Grid, Typography, Paper, Avatar } from "@mui/material";
+import { Spa, CardGiftcard, LocalShipping, Palette } from "@mui/icons-material";
 
 const advantages = [
-  {
-    icon: <Leaf className="h-10 w-10 text-primary" />,
-    text: "פירות טריים מהשוק",
-    description: "אנו בוחרים בקפידה את הפירות הטריים והאיכותיים ביותר מדי יום."
-  },
-  {
-    icon: <Gift className="h-10 w-10 text-primary" />,
-    text: "התאמה לאירועים",
-    description: "מגשים מותאמים אישית לכל סוגי האירועים: חגים, ימי הולדת, ועוד."
-  },
-  {
-    icon: <Truck className="h-10 w-10 text-primary" />,
-    text: "משלוחים בשומרון",
-    description: "שירות משלוחים מהיר ואמין לכל אזור השומרון והסביבה."
-  },
-  {
-    icon: <Palette className="h-10 w-10 text-primary" />,
-    text: "עיצוב ייחודי לכל לקוח",
-    description: "כל מגש מעוצב באהבה ותשומת לב, ליצירת חוויה ויזואלית מרשימה."
-  },
+	{
+		icon: <Spa fontSize="large" color="primary" />,
+		text: "פירות טריים מהשוק",
+		description:
+			"אנו בוחרים בקפידה את הפירות הטריים והאיכותיים ביותר מדי יום.",
+	},
+	{
+		icon: <CardGiftcard fontSize="large" color="primary" />,
+		text: "התאמה לאירועים",
+		description:
+			"מגשים מותאמים אישית לכל סוגי האירועים: חגים, ימי הולדת, ועוד.",
+	},
+	{
+		icon: <LocalShipping fontSize="large" color="primary" />,
+		text: "משלוחים בשומרון",
+		description: "שירות משלוחים מהיר ואמין לכל אזור השומרון והסביבה.",
+	},
+	{
+		icon: <Palette fontSize="large" color="primary" />,
+		text: "עיצוב ייחודי לכל לקוח",
+		description:
+			"כל מגש מעוצב באהבה ותשומת לב, ליצירת חוויה ויזואלית מרשימה.",
+	},
 ];
 
 export default function AdvantagesSection() {
-  return (
-    <section className="py-12 md:py-16 bg-muted/30 rounded-lg my-8">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-semibold text-primary text-center mb-10">היתרונות שלנו</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-          {advantages.map((advantage, index) => (
-            <div key={index} className="p-6 bg-background rounded-lg shadow-md flex flex-col items-center">
-              <div className="mb-4 p-3 bg-primary/10 rounded-full">
-                {advantage.icon}
-              </div>
-              <h3 className="text-xl font-medium text-foreground mb-2">{advantage.text}</h3>
-              <p className="text-foreground/70 text-sm">{advantage.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+	return (
+		<Box
+			component="section"
+			sx={{
+				py: 4,
+				bgcolor: "background.paper",
+				borderRadius: 2,
+				my: 4,
+			}}
+		>
+			<Box sx={{ textAlign: "center", mb: 4 }}>
+				<Typography
+					variant="h4"
+					color="primary"
+					gutterBottom
+				>
+					יתרונות שלנו
+				</Typography>
+			</Box>
+			<Grid container spacing={4}>
+				{advantages.map((adv, idx) => (
+					<Grid
+						key={idx}
+						size={{ xs: 12, sm: 6, md: 3 }}
+						display="flex"
+						justifyContent="center"
+					>
+						<Paper
+							elevation={3}
+							sx={{
+								p: 3,
+								textAlign: "center",
+								borderRadius: 2,
+							}}
+						>
+							<Avatar
+								sx={{
+									bgcolor: "primary.main",
+									mx: "auto",
+									mb: 2,
+								}}
+							>
+								{adv.icon}
+							</Avatar>
+							<Typography
+								variant="h6"
+								color="primary"
+								gutterBottom
+							>
+								{adv.text}
+							</Typography>
+							<Typography
+								variant="body2"
+								color="textSecondary"
+							>
+								{adv.description}
+							</Typography>
+						</Paper>
+					</Grid>
+				))}
+			</Grid>
+		</Box>
+	);
 }

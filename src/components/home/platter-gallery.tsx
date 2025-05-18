@@ -1,3 +1,4 @@
+import { Box, Typography, Grid } from "@mui/material";
 import PlatterCard from './platter-card';
 
 const samplePlatters = [
@@ -23,15 +24,24 @@ const samplePlatters = [
 
 export default function PlatterGallery() {
   return (
-    <section className="py-12 md:py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-semibold text-primary text-center mb-10">גלריית מגשים לדוגמה</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {samplePlatters.map((platter, index) => (
-            <PlatterCard key={index} {...platter} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <Box component="section" sx={{ py: 4 }}>
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Typography variant="h4" color="primary" gutterBottom>
+          גלריית מגשים לדוגמה
+        </Typography>
+      </Box>
+      <Grid container spacing={4}>
+        {samplePlatters.map((platter, index) => (
+          <Grid 
+            size={{ xs: 12, sm: 6, md: 4 }}
+            key={index}
+            display="flex"
+            justifyContent="center"
+          >
+            <PlatterCard {...platter} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }
