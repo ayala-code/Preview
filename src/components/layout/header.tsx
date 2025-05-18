@@ -1,7 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { Menu, Fruit } from 'lucide-react';
+import MenuIcon from "@mui/icons-material/Menu";
+import AppleIcon from "@mui/icons-material/Apple";
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
@@ -41,7 +42,7 @@ export default function Header() {
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
-                <Menu className="h-6 w-6" />
+                <MenuIcon className="h-6 w-6" />
                 <span className="sr-only">פתח תפריט ניווט</span>
               </Button>
             </SheetTrigger>

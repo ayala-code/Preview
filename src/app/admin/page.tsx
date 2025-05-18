@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -20,13 +19,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Edit, Trash2, Filter, CalendarDays, CheckCircle, Clock, Truck, PackageOpen } from "lucide-react";
+import { Visibility, Edit, Delete, FilterList, CalendarToday, CheckCircleOutline, AccessTime, LocalShipping, Inventory2 } from "@mui/icons-material";
 import type { Order, PlatterType } from "@/types";
 import { format } from "date-fns";
 import { he } from 'date-fns/locale';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Added import for Card components
 import { cn } from "@/lib/utils"; // Added import for cn
-
 
 const initialOrders: Order[] = [
   {
@@ -89,11 +87,11 @@ const initialOrders: Order[] = [
 
 const statusOptions = [
   { value: "all", label: "כל הסטטוסים" },
-  { value: "pending_payment", label: "בהמתנה לתשלום", icon: <Clock className="h-4 w-4 text-yellow-500" />, color: "bg-yellow-100 text-yellow-700 border-yellow-300" },
-  { value: "paid", label: "שולם", icon: <CheckCircle className="h-4 w-4 text-green-500" />, color: "bg-green-100 text-green-700 border-green-300" },
-  { value: "in_preparation", label: "בהכנה", icon: <PackageOpen className="h-4 w-4 text-blue-500" />, color: "bg-blue-100 text-blue-700 border-blue-300" },
-  { value: "delivered", label: "נמסר", icon: <Truck className="h-4 w-4 text-purple-500" />, color: "bg-purple-100 text-purple-700 border-purple-300" },
-  { value: "cancelled", label: "בוטל", icon: <Trash2 className="h-4 w-4 text-red-500" />, color: "bg-red-100 text-red-700 border-red-300" },
+  { value: "pending_payment", label: "בהמתנה לתשלום", icon: <AccessTime className="h-4 w-4 text-yellow-500" />, color: "bg-yellow-100 text-yellow-700 border-yellow-300" },
+  { value: "paid", label: "שולם", icon: <CheckCircleOutline className="h-4 w-4 text-green-500" />, color: "bg-green-100 text-green-700 border-green-300" },
+  { value: "in_preparation", label: "בהכנה", icon: <Inventory2 className="h-4 w-4 text-blue-500" />, color: "bg-blue-100 text-blue-700 border-blue-300" },
+  { value: "delivered", label: "נמסר", icon: <LocalShipping className="h-4 w-4 text-purple-500" />, color: "bg-purple-100 text-purple-700 border-purple-300" },
+  { value: "cancelled", label: "בוטל", icon: <Delete className="h-4 w-4 text-red-500" />, color: "bg-red-100 text-red-700 border-red-300" },
 ];
 
 const platterTypeFilters = [
@@ -158,7 +156,7 @@ export default function AdminPage() {
 
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl flex items-center"><Filter className="mr-2 ml-1 h-6 w-6 text-primary"/>סינון וחיפוש הזמנות</CardTitle>
+          <CardTitle className="text-2xl flex items-center"><FilterList className="mr-2 ml-1 h-6 w-6 text-primary"/>סינון וחיפוש הזמנות</CardTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
             <Input
               placeholder="חפש לפי מזהה, שם לקוח, או טלפון..."
@@ -221,14 +219,14 @@ export default function AdminPage() {
                     <TableCell className="text-left">
                       <div className="flex items-center gap-2">
                         <Button variant="ghost" size="icon" title="צפה בפרטים">
-                          <Eye className="h-4 w-4" />
+                          <Visibility className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon" title="ערוך הזמנה">
                           <Edit className="h-4 w-4" />
                         </Button>
                          {order.status === 'pending_payment' && (
                            <Button variant="outline" size="sm" title="אשר תשלום" onClick={() => handleConfirmPayment(order.id)}>
-                             <CheckCircle className="h-4 w-4 mr-1 ml-1 text-green-500" /> אשר תשלום
+                             <CheckCircleOutline className="h-4 w-4 mr-1 ml-1 text-green-500" /> אשר תשלום
                            </Button>
                          )}
                       </div>
