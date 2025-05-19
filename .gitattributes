@@ -1,0 +1,16 @@
+# Ensure all Markdown files use LF line endings
+*.md text eol=lf
+
+# Automatically handle line endings for all text files
+* text=auto eol=lf
+
+# Treat binary files correctly (no line ending conversion)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.mp4 binary
+*.mov binary
+*.pdf binary
+*.zip binary
+*.exe binary
