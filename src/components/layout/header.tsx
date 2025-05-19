@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from '@/components/logo';
-import { usePathname } from 'next/navigation';
+import { useClientPathname } from '@/hooks/use-client-pathname';
 import { cn } from '@/lib/utils';
 import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Button as MuiButton } from "@mui/material";
 
@@ -17,7 +17,7 @@ const navItems = [
 ];
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname = useClientPathname();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const toggleDrawer = (open: boolean | ((prevState: boolean) => boolean)) => (event: React.KeyboardEvent | React.MouseEvent) => {

@@ -9,7 +9,7 @@ import { he } from 'date-fns/locale';
 import { useToast } from "@/hooks/use-toast";
 import { platterTypeOptions, fruitOptions, addonOptions, PlatterType, Fruit, Addon } from "@/types";
 import AISuggestions from "@/components/ai/ai-suggestions";
-import { Checkbox, TextField, Button, FormControl, FormLabel, FormHelperText, RadioGroup, FormControlLabel, Radio, Card, CardContent, CardHeader, Typography } from "@mui/material";
+import { Checkbox, TextField, Button, FormControl, FormLabel, FormHelperText, RadioGroup, FormControlLabel, Radio, Card, CardContent, CardHeader, Typography, Box } from "@mui/material";
 
 const orderFormSchema = z.object({
   platterType: z.custom<PlatterType>(val => platterTypeOptions.some(p => p.value === val), {
@@ -57,9 +57,9 @@ export default function OrderForm() {
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px' }}>
-      <div>
-        <form onSubmit={form.handleSubmit(onSubmit)} style={{ padding: '16px', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 2 }}>
+      <Box>
+        <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2, bgcolor: '#f9f9f9' }}>
           <Typography variant="h5" gutterBottom>פרטי ההזמנה</Typography>
 
           <FormControl component="fieldset" margin="normal">
@@ -77,7 +77,7 @@ export default function OrderForm() {
 
           <FormControl component="fieldset" margin="normal">
             <FormLabel component="legend">בחר פירות (לפחות אחד) *</FormLabel>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1 }}>
               {fruitOptions.map(item => (
                 <FormControlLabel
                   key={item.value}
@@ -94,7 +94,7 @@ export default function OrderForm() {
                   label={item.label}
                 />
               ))}
-            </div>
+            </Box>
             <FormHelperText>{form.formState.errors.fruits?.message}</FormHelperText>
           </FormControl>
 
@@ -193,10 +193,10 @@ export default function OrderForm() {
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
             המשך לתשלום
           </Button>
-        </form>
-      </div>
+        </Box>
+      </Box>
 
-      <div>
+      <Box>
         <AISuggestions />
         <Card>
           <CardHeader>
@@ -206,10 +206,14 @@ export default function OrderForm() {
             <Typography color="textSecondary">
               כאן יוצג סיכום של הפריטים שנבחרו והמחיר הסופי לאחר חישוב.
             </Typography>
+            {/* Example ISO date display for demonstration */}
+            <Typography variant="body2" sx={{ mt: 2 }}>
+              תאריך הגעה (ISO): {form.watch('deliveryDate') ? (form.watch('deliveryDate') instanceof Date ? form.watch('deliveryDate').toISOString() : new Date(form.watch('deliveryDate')).toISOString()) : '---'}
+            </Typography>
           </CardContent>
         </Card>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

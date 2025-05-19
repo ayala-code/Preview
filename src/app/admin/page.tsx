@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { Visibility, Edit, Delete, FilterList, CalendarToday, CheckCircleOutline, AccessTime, LocalShipping, Inventory2 } from "@mui/icons-material";
+import { Visibility, Edit, Delete, FilterList, CalendarToday, CheckCircleOutline, AccessTime, LocalShipping, Inventory2, Badge } from "@mui/icons-material";
 import type { Order, PlatterType } from "@/types";
-import { format } from "date-fns";
-import { he } from 'date-fns/locale';
 import { cn } from "@/lib/utils"; // Added import for cn
+import { Card, CardHeader, CardContent, Button, TextField, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, Box } from "@mui/material";
 
 const initialOrders: Order[] = [
   {
@@ -18,7 +17,7 @@ const initialOrders: Order[] = [
     customerDetails: { name: "ישראל ישראלי", phone: "050-1234567", address: "תל אביב, רוטשילד 1" },
     status: "paid",
     totalAmount: 250,
-    paymentMethod: "credit_card_phone",
+    paymentMethod: "credit_card_phone", // Use a valid value for the type
     createdAt: new Date("2024-07-18"),
     updatedAt: new Date("2024-07-18"),
   },
@@ -50,7 +49,7 @@ const initialOrders: Order[] = [
     createdAt: new Date("2024-07-20"),
     updatedAt: new Date("2024-07-20"),
   },
-    {
+  {
     id: "ORD004",
     platterType: "round",
     fruits: ["watermelon", "grapes"],
@@ -87,7 +86,7 @@ export default function AdminPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [platterTypeFilter, setPlatterTypeFilter] = useState("all");
-  
+
   // Avoid hydration errors with initial state for client components
   useEffect(() => {
     setOrders(initialOrders);
@@ -106,117 +105,124 @@ export default function AdminPage() {
       })
       .filter((order) => statusFilter === "all" || order.status === statusFilter)
       .filter((order) => platterTypeFilter === "all" || order.platterType === platterTypeFilter)
-      .sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime()); // Sort by newest first
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()); // Sort by newest first
   }, [orders, searchTerm, statusFilter, platterTypeFilter]);
 
   const getStatusBadge = (status: Order["status"]) => {
     const option = statusOptions.find(s => s.value === status);
     return (
-      <Badge variant="outline" className={cn("flex items-center gap-1 capitalize text-xs px-2 py-1", option?.color)}>
+      <span className={cn("flex items-center gap-1 capitalize text-xs px-2 py-1 border rounded", option?.color)}>
         {option?.icon}
         {option?.label || status}
-      </Badge>
+      </span>
     );
   };
 
   const handleConfirmPayment = (orderId: string) => {
-    setOrders(prevOrders => prevOrders.map(order => 
-      order.id === orderId && order.status === 'pending_payment' 
-        ? { ...order, status: 'paid', updatedAt: new Date() } 
+    setOrders(prevOrders => prevOrders.map(order =>
+      order.id === orderId && order.status === 'pending_payment'
+        ? { ...order, status: 'paid', updatedAt: new Date() }
         : order
     ));
     // Here you would also call an API to update the backend
   };
 
   return (
-    <div className="space-y-8">
-      <header className="text-center py-8 bg-primary/10 rounded-lg">
-        <h1 className="text-4xl font-bold text-primary">ניהול הזמנות</h1>
-        <p className="mt-2 text-lg text-foreground/80">מעקב וניהול הזמנות לקוחות.</p>
-      </header>
-
-      <Card className="shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl flex items-center"><FilterList className="mr-2 ml-1 h-6 w-6 text-primary"/>סינון וחיפוש הזמנות</CardTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-            <Input
-              placeholder="חפש לפי מזהה, שם לקוח, או טלפון..."
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <Box component="header" sx={{ textAlign: 'center', p: '32px 0', bgcolor: 'rgba(25, 118, 210, 0.1)', borderRadius: 2 }}>
+        <Box component="h1" sx={{ fontSize: 32, fontWeight: 700, color: '#1976d2' }}>ניהול הזמנות</Box>
+        <Box component="p" sx={{ mt: 1, fontSize: 18, color: '#333' }}>מעקב וניהול הזמנות לקוחות.</Box>
+      </Box>
+      <Card sx={{ boxShadow: 3 }}>
+        <CardHeader
+          title={
+            <Box sx={{ display: 'flex', alignItems: 'center', fontSize: 24 }}>
+              <FilterList sx={{ mr: 1, ml: 1, fontSize: 28, color: '#1976d2' }} />
+              סינון וחיפוש הזמנות
+            </Box>
+          }
+        />
+        <CardContent>
+          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 2, pt: 2 }}>
+            <TextField
+              label="חפש לפי מזהה, שם לקוח, או טלפון..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="lg:col-span-2"
+              variant="outlined"
+              fullWidth
             />
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger>
-                <SelectValue placeholder="סנן לפי סטטוס" />
-              </SelectTrigger>
-              <SelectContent>
+            <FormControl fullWidth>
+              <InputLabel>סנן לפי סטטוס</InputLabel>
+              <Select
+                value={statusFilter}
+                label="סנן לפי סטטוס"
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
                 {statusOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </SelectItem>
+                  </MenuItem>
                 ))}
-              </SelectContent>
-            </Select>
-            <Select value={platterTypeFilter} onValueChange={setPlatterTypeFilter}>
-              <SelectTrigger>
-                <SelectValue placeholder="סנן לפי סוג מגש" />
-              </SelectTrigger>
-              <SelectContent>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>סנן לפי סוג מגש</InputLabel>
+              <Select
+                value={platterTypeFilter}
+                label="סנן לפי סוג מגש"
+                onChange={(e) => setPlatterTypeFilter(e.target.value)}
+              >
                 {platterTypeFilters.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </SelectItem>
+                  </MenuItem>
                 ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
+              </Select>
+            </FormControl>
+          </Box>
+          <Table sx={{ marginTop: 4 }}>
+            <TableHead>
               <TableRow>
-                <TableHead>מזהה הזמנה</TableHead>
-                <TableHead>לקוח</TableHead>
-                <TableHead>תאריך משלוח</TableHead>
-                <TableHead>סוג מגש</TableHead>
-                <TableHead>סכום</TableHead>
-                <TableHead>סטטוס</TableHead>
-                <TableHead className="text-left">פעולות</TableHead>
+                <TableCell>מזהה הזמנה</TableCell>
+                <TableCell>לקוח</TableCell>
+                <TableCell>תאריך משלוח</TableCell>
+                <TableCell>סוג מגש</TableCell>
+                <TableCell>סכום</TableCell>
+                <TableCell>סטטוס</TableCell>
+                <TableCell align="left">פעולות</TableCell>
               </TableRow>
-            </TableHeader>
+            </TableHead>
             <TableBody>
               {filteredOrders.length > 0 ? (
                 filteredOrders.map((order) => (
                   <TableRow key={order.id}>
-                    <TableCell className="font-medium">{order.id}</TableCell>
+                    <TableCell>{order.id}</TableCell>
                     <TableCell>
-                        <div>{order.customerDetails.name}</div>
-                        <div className="text-xs text-muted-foreground">{order.customerDetails.phone}</div>
+                      <Box>{order.customerDetails.name}</Box>
+                      <Box sx={{ fontSize: 12, color: '#888' }}>{order.customerDetails.phone}</Box>
                     </TableCell>
-                    <TableCell>{format(order.deliveryDate, "PPP", { locale: he })}</TableCell>
-                    <TableCell className="capitalize">{platterTypeFilters.find(p => p.value === order.platterType)?.label || order.platterType}</TableCell>
+                    <TableCell>{order.deliveryDate instanceof Date ? order.deliveryDate.toISOString() : new Date(order.deliveryDate).toISOString()}</TableCell>
+                    <TableCell>{platterTypeFilters.find(p => p.value === order.platterType)?.label || order.platterType}</TableCell>
                     <TableCell>₪{order.totalAmount.toFixed(2)}</TableCell>
                     <TableCell>{getStatusBadge(order.status)}</TableCell>
-                    <TableCell className="text-left">
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" title="צפה בפרטים">
-                          <Visibility className="h-4 w-4" />
+                    <TableCell align="left">
+                      <Button variant="outlined" size="small" title="צפה בפרטים" sx={{ minWidth: 36, marginRight: 1 }}>
+                        <Visibility fontSize="small" />
+                      </Button>
+                      <Button variant="outlined" size="small" title="ערוך הזמנה" sx={{ minWidth: 36, marginRight: 1 }}>
+                        <Edit fontSize="small" />
+                      </Button>
+                      {order.status === 'pending_payment' && (
+                        <Button variant="contained" color="success" size="small" title="אשר תשלום" sx={{ minWidth: 36 }} onClick={() => handleConfirmPayment(order.id)}>
+                          <CheckCircleOutline fontSize="small" sx={{ marginLeft: 1 }} /> אשר תשלום
                         </Button>
-                        <Button variant="ghost" size="icon" title="ערוך הזמנה">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                         {order.status === 'pending_payment' && (
-                           <Button variant="outline" size="sm" title="אשר תשלום" onClick={() => handleConfirmPayment(order.id)}>
-                             <CheckCircleOutline className="h-4 w-4 mr-1 ml-1 text-green-500" /> אשר תשלום
-                           </Button>
-                         )}
-                      </div>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center h-24">
+                  <TableCell colSpan={7} align="center" sx={{ height: 96 }}>
                     לא נמצאו הזמנות התואמות את החיפוש.
                   </TableCell>
                 </TableRow>
@@ -225,7 +231,7 @@ export default function AdminPage() {
           </Table>
         </CardContent>
       </Card>
-    </div>
+    </Box>
   );
 }
 

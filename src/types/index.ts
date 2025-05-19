@@ -19,7 +19,7 @@ export type Order = {
   customerDetails: CustomerDetails;
   status: "pending_payment" | "paid" | "in_preparation" | "delivered" | "cancelled";
   totalAmount: number;
-  paymentMethod?: "bank_transfer" | "credit_card_phone" | "cash";
+  paymentMethod?: "bank_transfer" | "credit_card_phone" | "cash" | "paid";
   paymentProofUrl?: string; // For bank transfer
   createdAt: Date;
   updatedAt: Date;
@@ -49,13 +49,13 @@ export const addonOptions: { value: Addon; label: string }[] = [
 ];
 
 export const eventTypeOptions = [
-    { value: "birthday", label: "יום הולדת" },
-    { value: "anniversary", label: "יום נישואין" },
-    { value: "holiday", label: "חג" },
-    { value: "shabbat", label: "שבת/אירוח" },
-    { value: "corporate", label: "אירוע חברה" },
-    { value: "sympathy", label: "ניחומים" },
-    { value: "new_baby", label: "לידה/ברית" },
-    { value: "thank_you", label: "תודה" },
-    { value: "other", label: "אחר" },
+  { value: "birthday", label: "יום הולדת" },
+  { value: "anniversary", label: "יום נישואין" },
+  { value: "holiday", label: "חג" },
+  { value: "shabbat", label: "שבת/אירוח" },
+  { value: "corporate", label: "אירוע חברה" },
+  { value: "sympathy", label: "ניחומים" },
+  { value: "new_baby", label: "לידה/ברית" },
+  { value: "thank_you", label: "תודה" },
+  { value: "other", label: "אחר" },
 ];

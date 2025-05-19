@@ -4,12 +4,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
+import { Mail, Phone, MapPin } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  TextField,
+  Typography,
+  Box,
+  Grid,
+} from "@mui/material";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "שם חייב להכיל לפחות 2 תווים." }),
   email: z.string().email({ message: "כתובת אימייל לא תקינה." }),
   phone: z.string().optional(),
-  subject: z.string().min(3, { message: "נושא חייב להכיל לפחות 3 תווים."}),
+  subject: z.string().min(3, { message: "נושא חייב להכיל לפחות 3 תווים." }),
   message: z.string().min(10, { message: "הודעה חייבת להכיל לפחות 10 תווים." }),
 });
 
@@ -39,128 +50,204 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="space-y-12">
-      <header className="text-center py-8 bg-primary/10 rounded-lg">
-        <h1 className="text-4xl font-bold text-primary">צור קשר</h1>
-        <p className="mt-2 text-lg text-foreground/80">נשמח לשמוע ממך!</p>
-      </header>
-
-      <div className="grid md:grid-cols-2 gap-12 items-start">
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-2xl">שלח לנו הודעה</CardTitle>
-            <CardDescription>מלא את הטופס ונחזור אליך בהקדם.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>שם מלא</FormLabel>
-                      <FormControl>
-                        <Input placeholder="הכנס שם מלא" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+    <Box sx={{ py: 6 }}>
+      <Box
+        sx={{
+          textAlign: "center",
+          py: 4,
+          bgcolor: "primary.light",
+          borderRadius: 2,
+          mb: 6,
+        }}
+      >
+        <Typography
+          variant="h3"
+          color="primary"
+          fontWeight={700}
+          gutterBottom
+        >
+          צור קשר
+        </Typography>
+        <Typography variant="h6" color="text.secondary">
+          נשמח לשמוע ממך!
+        </Typography>
+      </Box>
+      <Grid container spacing={6} alignItems="flex-start">
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardHeader
+              title={<Typography variant="h5">שלח לנו הודעה</Typography>}
+              subheader={
+                <Typography color="text.secondary">
+                  מלא את הטופס ונחזור אליך בהקדם.
+                </Typography>
+              }
+            />
+            <CardContent>
+              <Box
+                component="form"
+                onSubmit={form.handleSubmit(onSubmit)}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                }}
+              >
+                <TextField
+                  label="שם מלא"
+                  {...form.register("name")}
+                  error={!!form.formState.errors.name}
+                  helperText={form.formState.errors.name?.message}
+                  fullWidth
                 />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>כתובת אימייל</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="your@email.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                <TextField
+                  label="כתובת אימייל"
+                  type="email"
+                  {...form.register("email")}
+                  error={!!form.formState.errors.email}
+                  helperText={form.formState.errors.email?.message}
+                  fullWidth
                 />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>מספר טלפון (אופציונלי)</FormLabel>
-                      <FormControl>
-                        <Input type="tel" placeholder="050-1234567" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                <TextField
+                  label="מספר טלפון (אופציונלי)"
+                  type="tel"
+                  {...form.register("phone")}
+                  error={!!form.formState.errors.phone}
+                  helperText={form.formState.errors.phone?.message}
+                  fullWidth
                 />
-                 <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>נושא הפנייה</FormLabel>
-                      <FormControl>
-                        <Input placeholder="נושא" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                <TextField
+                  label="נושא הפנייה"
+                  {...form.register("subject")}
+                  error={!!form.formState.errors.subject}
+                  helperText={form.formState.errors.subject?.message}
+                  fullWidth
                 />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>הודעה</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="כתוב את הודעתך כאן..." rows={5} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                <TextField
+                  label="הודעה"
+                  {...form.register("message")}
+                  error={!!form.formState.errors.message}
+                  helperText={form.formState.errors.message?.message}
+                  multiline
+                  minRows={5}
+                  fullWidth
                 />
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90">שלח הודעה</Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-2xl">פרטי התקשרות</CardTitle>
-            <CardDescription>דרכים נוספות ליצור איתנו קשר.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6 text-foreground/90">
-            <div className="flex items-start space-x-3 space-x-reverse">
-              <Mail className="h-6 w-6 text-primary mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">אימייל</h4>
-                <a href="mailto:contact@priyuvi.co.il" className="hover:text-primary">contact@priyuvi.co.il</a>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3 space-x-reverse">
-              <Phone className="h-6 w-6 text-primary mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">טלפון</h4>
-                <a href="tel:+972501234567" className="hover:text-primary">050-1234567</a>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3 space-x-reverse">
-              <MapPin className="h-6 w-6 text-primary mt-1 shrink-0" />
-              <div>
-                <h4 className="font-semibold">כתובת (לאיסוף עצמי)</h4>
-                <p>רחוב הפירות 1, ישוב לדוגמה, שומרון</p>
-                <p className="text-sm text-muted-foreground">(בתיאום מראש בלבד)</p>
-              </div>
-            </div>
-             <div className="mt-6 pt-6 border-t">
-                <h4 className="font-semibold mb-2">שעות פעילות</h4>
-                <p>ראשון - חמישי: 09:00 - 18:00</p>
-                <p>שישי וערבי חג: 09:00 - 13:00</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ mt: 2 }}
+                >
+                  שלח הודעה
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card sx={{ boxShadow: 3 }}>
+            <CardHeader
+              title={<Typography variant="h5">פרטי התקשרות</Typography>}
+              subheader={
+                <Typography color="text.secondary">
+                  דרכים נוספות ליצור איתנו קשר.
+                </Typography>
+              }
+            />
+            <CardContent>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 3,
+                  color: "text.primary",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 2,
+                  }}
+                >
+                  <Mail style={{ color: "#1976d2", marginTop: 4 }} />
+                  <Box>
+                    <Typography fontWeight={600}>אימייל</Typography>
+                    <Typography
+                      component="a"
+                      href="mailto:contact@priyuvi.co.il"
+                      color="primary.main"
+                      sx={{
+                        textDecoration: "none",
+                        "&:hover": { textDecoration: "underline" },
+                      }}
+                    >
+                      contact@priyuvi.co.il
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 2,
+                  }}
+                >
+                  <Phone style={{ color: "#1976d2", marginTop: 4 }} />
+                  <Box>
+                    <Typography fontWeight={600}>טלפון</Typography>
+                    <Typography
+                      component="a"
+                      href="tel:+972501234567"
+                      color="primary.main"
+                      sx={{
+                        textDecoration: "none",
+                        "&:hover": { textDecoration: "underline" },
+                      }}
+                    >
+                      050-1234567
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 2,
+                  }}
+                >
+                  <MapPin style={{ color: "#1976d2", marginTop: 4 }} />
+                  <Box>
+                    <Typography fontWeight={600}>כתובת (לאיסוף עצמי)</Typography>
+                    <Typography>רחוב הפירות 1, ישוב לדוגמה, שומרון</Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      (בתיאום מראש בלבד)
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    borderTop: 1,
+                    borderColor: "divider",
+                    pt: 3,
+                    mt: 3,
+                  }}
+                >
+                  <Typography fontWeight={600} mb={1}>
+                    שעות פעילות
+                  </Typography>
+                  <Typography>ראשון - חמישי: 09:00 - 18:00</Typography>
+                  <Typography>שישי וערבי חג: 09:00 - 13:00</Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

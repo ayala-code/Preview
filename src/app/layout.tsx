@@ -1,9 +1,10 @@
-import type {Metadata} from 'next';
-import {Geist} from 'next/font/google'; // Using Geist Sans as per existing setup
+import type { Metadata } from 'next';
+import { Geist } from 'next/font/google'; // Using Geist Sans as per existing setup
 import './globals.css';
-import { CssBaseline, Container } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
+import theme from '../theme';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -23,14 +24,12 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <body className={`${geistSans.variable} font-sans antialiased`}>
-        <CssBaseline />
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Header />
-          <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
-            {children}
-          </Container>
-          <Footer />
-        </div>
+                  {children}
+          {/* <Footer /> */}
+        </ThemeProvider>
       </body>
     </html>
   );
