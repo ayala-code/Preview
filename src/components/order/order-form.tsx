@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import * as z from "zod";
+import React, { useState, useEffect } from 'react';
 
 import { format } from "date-fns";
 import { he } from 'date-fns/locale';
@@ -46,6 +47,17 @@ export default function OrderForm() {
       notes: "",
     },
   });
+
+  const [deliveryDateIso, setDeliveryDateIso] = useState<string | null>(null);
+
+  useEffect(() => {
+    const val = form.watch('deliveryDate');
+    if (val) {
+      setDeliveryDateIso(val instanceof Date ? val.toISOString() : new Date(val).toISOString());
+    } else {
+      setDeliveryDateIso(null);
+    }
+  }, [form.watch('deliveryDate')]);
 
   function onSubmit(data: OrderFormValues) {
     console.log(data);
@@ -208,7 +220,7 @@ export default function OrderForm() {
             </Typography>
             {/* Example ISO date display for demonstration */}
             <Typography variant="body2" sx={{ mt: 2 }}>
-              תאריך הגעה (ISO): {form.watch('deliveryDate') ? (form.watch('deliveryDate') instanceof Date ? form.watch('deliveryDate').toISOString() : new Date(form.watch('deliveryDate')).toISOString()) : '---'}
+              תאריך הגעה (ISO): {deliveryDateIso ?? '---'}
             </Typography>
           </CardContent>
         </Card>

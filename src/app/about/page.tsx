@@ -24,7 +24,7 @@ export default function AboutPage() {
           </Typography>
           <Box sx={{ position: 'relative', width: '100%', height: 300, borderRadius: 2, overflow: 'hidden', my: 2 }}>
             <Image
-              src="https://picsum.photos/800/400?random=10"
+              src="/images/Pictures-fruits/fruit1.jpg"
               alt="צוות פריויו מכין מגש פירות"
               layout="fill"
               objectFit="cover"

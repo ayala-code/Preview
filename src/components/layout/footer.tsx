@@ -1,7 +1,8 @@
+'use client'
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025;
 
   return (
     <Box component="footer" sx={{ borderTop: 1, borderColor: 'divider', bgcolor: 'background.default', py: 4, textAlign: 'center' }}>

@@ -1,67 +1,74 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { useMemo } from "react";
 import { Visibility, Edit, Delete, FilterList, CalendarToday, CheckCircleOutline, AccessTime, LocalShipping, Inventory2, Badge } from "@mui/icons-material";
 import type { Order, PlatterType } from "@/types";
 import { cn } from "@/lib/utils"; // Added import for cn
 import { Card, CardHeader, CardContent, Button, TextField, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, Box } from "@mui/material";
 
-const initialOrders: Order[] = [
+type OrderLike = Omit<Order, 'deliveryDate' | 'createdAt' | 'updatedAt'> & {
+  deliveryDate: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+const initialOrders: OrderLike[] = [
   {
     id: "ORD001",
     platterType: "heart",
     fruits: ["strawberry", "berries"],
     addons: ["chocolate"],
-    deliveryDate: new Date("2024-07-20"),
+    deliveryDate: "2024-07-20T00:00:00.000Z",
     deliveryTime: "14:00-16:00",
     customerDetails: { name: "ישראל ישראלי", phone: "050-1234567", address: "תל אביב, רוטשילד 1" },
     status: "paid",
     totalAmount: 250,
-    paymentMethod: "credit_card_phone", // Use a valid value for the type
-    createdAt: new Date("2024-07-18"),
-    updatedAt: new Date("2024-07-18"),
+    paymentMethod: "credit_card_phone",
+    createdAt: "2024-07-18T00:00:00.000Z",
+    updatedAt: "2024-07-18T00:00:00.000Z",
   },
   {
     id: "ORD002",
     platterType: "round",
     fruits: ["melon", "grapes", "pineapple"],
     addons: [],
-    deliveryDate: new Date("2024-07-22"),
+    deliveryDate: "2024-07-22T00:00:00.000Z",
     deliveryTime: "איסוף ב-10:00",
     customerDetails: { name: "שרה לוי", phone: "052-9876543", address: "איסוף עצמי" },
     status: "pending_payment",
     totalAmount: 180,
     paymentMethod: "bank_transfer",
-    createdAt: new Date("2024-07-19"),
-    updatedAt: new Date("2024-07-19"),
+    createdAt: "2024-07-19T00:00:00.000Z",
+    updatedAt: "2024-07-19T00:00:00.000Z",
   },
   {
     id: "ORD003",
     platterType: "boat",
     fruits: ["mango", "kiwi", "strawberry", "berries"],
     addons: ["inscription", "balloon"],
-    deliveryDate: new Date("2024-07-25"),
+    deliveryDate: "2024-07-25T00:00:00.000Z",
     deliveryTime: "18:00",
     customerDetails: { name: "דוד כהן", phone: "054-1122333", address: "ירושלים, יפו 30" },
     status: "in_preparation",
     totalAmount: 320,
-    paymentMethod: "paid", // Assuming paid if in_preparation
-    createdAt: new Date("2024-07-20"),
-    updatedAt: new Date("2024-07-20"),
+    paymentMethod: "paid",
+    createdAt: "2024-07-20T00:00:00.000Z",
+    updatedAt: "2024-07-20T00:00:00.000Z",
   },
   {
     id: "ORD004",
     platterType: "round",
     fruits: ["watermelon", "grapes"],
     addons: [],
-    deliveryDate: new Date("2024-07-15"),
+    deliveryDate: "2024-07-15T00:00:00.000Z",
     deliveryTime: "12:00",
     customerDetails: { name: "רותם חן", phone: "053-5556677", address: "חיפה, הכרמל 5" },
     status: "delivered",
     totalAmount: 150,
     paymentMethod: "cash",
-    createdAt: new Date("2024-07-14"),
-    updatedAt: new Date("2024-07-15"),
+    createdAt: "2024-07-14T00:00:00.000Z",
+    updatedAt: "2024-07-15T00:00:00.000Z",
   },
 ];
 
@@ -87,11 +94,31 @@ export default function AdminPage() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [platterTypeFilter, setPlatterTypeFilter] = useState("all");
 
+  // Add state for ISO delivery date strings for all orders
+  const [ordersIsoDates, setOrdersIsoDates] = useState<Record<string, string>>({});
+
   // Avoid hydration errors with initial state for client components
   useEffect(() => {
-    setOrders(initialOrders);
+    const parsedOrders: Order[] = initialOrders.map(order => ({
+      ...order,
+      deliveryDate: new Date(order.deliveryDate),
+      createdAt: new Date(order.createdAt),
+      updatedAt: new Date(order.updatedAt),
+    }));
+    setOrders(parsedOrders);
   }, []);
 
+  useEffect(() => {
+    const isoDates: Record<string, string> = {};
+    orders.forEach(order => {
+      if (order.deliveryDate instanceof Date) {
+        isoDates[order.id] = order.deliveryDate.toISOString();
+      } else {
+        isoDates[order.id] = new Date(order.deliveryDate).toISOString();
+      }
+    });
+    setOrdersIsoDates(isoDates);
+  }, [orders]);
 
   const filteredOrders = useMemo(() => {
     return orders
@@ -201,7 +228,7 @@ export default function AdminPage() {
                       <Box>{order.customerDetails.name}</Box>
                       <Box sx={{ fontSize: 12, color: '#888' }}>{order.customerDetails.phone}</Box>
                     </TableCell>
-                    <TableCell>{order.deliveryDate instanceof Date ? order.deliveryDate.toISOString() : new Date(order.deliveryDate).toISOString()}</TableCell>
+                    <TableCell>{ordersIsoDates[order.id] ?? '---'}</TableCell>
                     <TableCell>{platterTypeFilters.find(p => p.value === order.platterType)?.label || order.platterType}</TableCell>
                     <TableCell>₪{order.totalAmount.toFixed(2)}</TableCell>
                     <TableCell>{getStatusBadge(order.status)}</TableCell>

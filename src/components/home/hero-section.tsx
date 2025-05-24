@@ -17,7 +17,7 @@ export default function HeroSection() {
         borderRadius: 2,
         overflow: 'hidden',
         boxShadow: 3,
-        backgroundImage: 'url(https://picsum.photos/1200/800?random=1)',
+        backgroundImage: 'url(/images/Pictures-fruits/background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
