@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from '@/components/logo';
-import { useClientPathname } from '@/hooks/use-client-pathname';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Button as MuiButton } from "@mui/material";
 
@@ -17,7 +17,7 @@ const navItems = [
 ];
 
 export default function Header() {
-  const pathname = useClientPathname();
+  const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const toggleDrawer = (open: boolean | ((prevState: boolean) => boolean)) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -28,21 +28,23 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="sticky" color="default">
-      <Toolbar>
+    <AppBar position="static" elevation={0} sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+      <Toolbar sx={{ width: '100%', maxWidth: 'none', px: 0, py: 2, bgcolor: 'transparent', minHeight: 'unset' }}>
         <Logo />
-        <nav className="hidden md:flex items-center space-x-6 space-x-reverse text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-16 space-x-reverse text-lg font-extrabold tracking-wide flex-grow justify-center">
           {navItems.map((item) => (
             <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "transition-colors hover:text-primary",
-                pathname === item.href ? "text-primary font-semibold" : "text-foreground/70"
-              )}
-            >
-              {item.label}
-            </Link>
+  key={item.href}
+  href={item.href}
+  className={cn(
+    "transition-all px-3 py-1 rounded-lg font-semibold",
+    pathname === item.href
+      ? "bg-yellow-300 text-yellow-900 shadow"
+      : "text-yellow-700 hover:text-yellow-900 hover:bg-yellow-100"
+  )}
+>
+  {item.label}
+</Link>
           ))}
         </nav>
         <IconButton
