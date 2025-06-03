@@ -50,7 +50,7 @@ export default function AISuggestions() {
 
   return (
     <Box sx={{ p: 3, border: 1, borderColor: 'divider', borderRadius: 2, boxShadow: 3 }}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" className="typography-heading-sm" gutterBottom>
         הצעות מבוססות AI
       </Typography>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -85,7 +85,7 @@ export default function AISuggestions() {
       </form>
       {suggestions.length > 0 && (
         <Box sx={{ mt: 3 }}>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" className="typography-heading-sm" gutterBottom>
             הצעות:
           </Typography>
           <ul>

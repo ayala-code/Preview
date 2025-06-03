@@ -33,7 +33,7 @@ export default function PaymentOptions() {
 
   return (
     <Box sx={{ p: 3, border: 1, borderColor: 'divider', borderRadius: 2, boxShadow: 3 }}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" className="typography-heading-sm" gutterBottom>
         אפשרויות תשלום
       </Typography>
       <Box sx={{ mt: 2 }}>

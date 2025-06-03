@@ -20,7 +20,7 @@ export default function PlatterCard({ title, description, imageUrl, imageHint, o
         sx={{ objectFit: 'cover' }}
       />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" color="primary" gutterBottom>
+        <Typography variant="h6" className="typography-heading-sm" color="primary" gutterBottom>
           {title}
         </Typography>
         <Typography variant="body2" color="textSecondary">

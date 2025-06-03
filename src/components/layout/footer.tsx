@@ -8,13 +8,16 @@ export default function Footer() {
     <Box component="footer" sx={{ borderTop: 1, borderColor: 'divider', bgcolor: 'background.default', py: 4, textAlign: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-around', alignItems: 'center', mb: 3 }}>
         <Box>
-          <Typography variant="h6" gutterBottom>יצירת קשר</Typography>
-          <MuiLink href="mailto:contact@priyuvi.co.il" underline="hover" color="primary">
+          <Typography variant="h6" className="typography-heading-sm" gutterBottom>יצירת קשר</Typography>
+          {/* <MuiLink href="mailto:contact@priyuvi.co.il" underline="hover" color="primary">
             contact@priyuvi.co.il
+          </MuiLink> */}
+          <MuiLink href="mailto:A26294255@gmail.com" underline="hover" color="primary">
+            A26294255@gmail.com
           </MuiLink>
           <br />
-          <MuiLink href="tel:+972501234567" underline="hover" color="primary">
-            050-1234567
+          <MuiLink href="tel:+972533167536" underline="hover" color="primary">
+            053-3167536
           </MuiLink>
         </Box>
         {/* Placeholder for quick contact form */}

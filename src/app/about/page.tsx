@@ -1,22 +1,16 @@
 import { Box, Typography, Card, CardContent, CardHeader, Avatar, Grid } from "@mui/material";
 import Image from 'next/image';
 import { Spa, Group, SentimentSatisfied } from "@mui/icons-material";
+import PageHeader from '@/components/ui/page-header';
 
 export default function AboutPage() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <Box sx={{ textAlign: 'center', py: 4, bgcolor: 'primary.light', borderRadius: 2 }}>
-        <Typography variant="h3" color="primary" gutterBottom>
-          אודות פריויו
-        </Typography>
-        <Typography variant="body1" color="textSecondary">
-          הסיפור מאחורי מגשי הפירות שלנו
-        </Typography>
-      </Box>
+      <PageHeader title="אודות פריויו" subtitle="הסיפור מאחורי מגשי הפירות שלנו" />
 
       <Card sx={{ boxShadow: 3 }}>
         <CardHeader
-          title={<Typography variant="h5" color="primary">החזון שלנו</Typography>}
+          title={<Typography variant="h5" className="typography-heading-sm" color="primary">החזון שלנו</Typography>}
         />
         <CardContent>
           <Typography variant="body1" color="textSecondary" paragraph>
@@ -41,7 +35,7 @@ export default function AboutPage() {
           <Card>
             <CardHeader
               avatar={<Avatar sx={{ bgcolor: 'primary.main' }}><Spa /></Avatar>}
-              title={<Typography variant="h6">טריות ואיכות</Typography>}
+              title={<Typography variant="h6" className="typography-heading-sm">טריות ואיכות</Typography>}
             />
             <CardContent>
               <Typography variant="body2" color="textSecondary">
@@ -54,7 +48,7 @@ export default function AboutPage() {
           <Card>
             <CardHeader
               avatar={<Avatar sx={{ bgcolor: 'primary.main' }}><Group /></Avatar>}
-              title={<Typography variant="h6">שירות אישי</Typography>}
+              title={<Typography variant="h6" className="typography-heading-sm">שירות אישי</Typography>}
             />
             <CardContent>
               <Typography variant="body2" color="textSecondary">
@@ -67,7 +61,7 @@ export default function AboutPage() {
           <Card>
             <CardHeader
               avatar={<Avatar sx={{ bgcolor: 'primary.main' }}><SentimentSatisfied /></Avatar>}
-              title={<Typography variant="h6">חוויה בלתי נשכחת</Typography>}
+              title={<Typography variant="h6" className="typography-heading-sm">חוויה בלתי נשכחת</Typography>}
             />
             <CardContent>
               <Typography variant="body2" color="textSecondary">

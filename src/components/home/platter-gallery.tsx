@@ -1,5 +1,3 @@
-
-
 import { Box, Typography, Grid } from "@mui/material";
 import PlatterCard from './platter-card';
 
@@ -28,7 +26,7 @@ export default function PlatterGallery() {
   return (
     <Box component="section" sx={{ py: 4 }}>
       <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Typography variant="h4" color="primary" gutterBottom>
+        <Typography variant="h4" className="typography-heading-sm" color="primary" gutterBottom>
           גלריית מגשים לדוגמה
         </Typography>
       </Box>

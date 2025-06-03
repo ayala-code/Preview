@@ -72,8 +72,8 @@ export default function OrderForm() {
     <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 2 }}>
       <Box>
         <Box component="form" onSubmit={form.handleSubmit(onSubmit)} sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2, bgcolor: '#f9f9f9' }}>
-          <Typography variant="h5" gutterBottom>פרטי ההזמנה</Typography>
-
+          <Typography variant="h5" className="typography-heading-sm" gutterBottom>פרטי ההזמנה</Typography>
+{/* 
           <FormControl component="fieldset" margin="normal">
             <FormLabel component="legend">בחר סוג מגש *</FormLabel>
             <RadioGroup
@@ -85,9 +85,9 @@ export default function OrderForm() {
               ))}
             </RadioGroup>
             <FormHelperText>{form.formState.errors.platterType?.message}</FormHelperText>
-          </FormControl>
+          </FormControl> */}
 
-          <FormControl component="fieldset" margin="normal">
+          {/* <FormControl component="fieldset" margin="normal">
             <FormLabel component="legend">בחר פירות (לפחות אחד) *</FormLabel>
             <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1 }}>
               {fruitOptions.map(item => (
@@ -108,7 +108,7 @@ export default function OrderForm() {
               ))}
             </Box>
             <FormHelperText>{form.formState.errors.fruits?.message}</FormHelperText>
-          </FormControl>
+          </FormControl> */}
 
           <Controller
             name="deliveryDate"
@@ -209,10 +209,10 @@ export default function OrderForm() {
       </Box>
 
       <Box>
-        <AISuggestions />
+        {/* <AISuggestions /> */}
         <Card>
           <CardHeader>
-            <Typography variant="h6">סיכום הזמנה (דוגמה)</Typography>
+            <Typography variant="h6" className="typography-heading-sm">סיכום הזמנה (דוגמה)</Typography>
           </CardHeader>
           <CardContent>
             <Typography color="textSecondary">

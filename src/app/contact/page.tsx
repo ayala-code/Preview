@@ -15,6 +15,7 @@ import {
   Box,
   Grid,
 } from "@mui/material";
+import PageHeader from "@/components/ui/page-header";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "שם חייב להכיל לפחות 2 תווים." }),
@@ -39,44 +40,42 @@ export default function ContactPage() {
     },
   });
 
-  function onSubmit(data: ContactFormValues) {
-    // Here you would typically send the data to a server or email service
-    console.log(data);
-    toast({
-      title: "ההודעה נשלחה!",
-      description: "ניצור איתך קשר בהקדם.",
-    });
-    form.reset();
+  async function onSubmit(data: ContactFormValues) {
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      if (result.success) {
+        toast({
+          title: "ההודעה נשלחה!",
+          description: "ניצור איתך קשר בהקדם.",
+        });
+        form.reset();
+      } else {
+        toast({
+          title: "שגיאה בשליחת ההודעה",
+          description: result.error || "אירעה שגיאה. נסה שוב.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "שגיאה בשליחת ההודעה",
+        description: "אירעה שגיאה. נסה שוב.",
+      });
+    }
   }
-
-  return (
-    <Box sx={{ py: 6 }}>
-      <Box
-        sx={{
-          textAlign: "center",
-          py: 4,
-          bgcolor: "primary.light",
-          borderRadius: 2,
-          mb: 6,
-        }}
-      >
-        <Typography
-          variant="h3"
-          color="primary"
-          fontWeight={700}
-          gutterBottom
-        >
-          צור קשר
-        </Typography>
-        <Typography variant="h6" color="text.secondary">
-          נשמח לשמוע ממך!
-        </Typography>
-      </Box>
+  
+    return (
+      <Box sx={{ py: 6 }}>
+      <PageHeader title="צור קשר" subtitle="נשמח לשמוע ממך!" />
       <Grid container spacing={6} alignItems="flex-start">
         <Grid size={{ xs: 12, md: 6 }}>
           <Card sx={{ boxShadow: 3 }}>
             <CardHeader
-              title={<Typography variant="h5">שלח לנו הודעה</Typography>}
+              title={<Typography variant="h5" className="typography-heading-sm">שלח לנו הודעה</Typography>}
               subheader={
                 <Typography color="text.secondary">
                   מלא את הטופס ונחזור אליך בהקדם.
@@ -135,7 +134,7 @@ export default function ContactPage() {
                 <Button
                   type="submit"
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   fullWidth
                   sx={{ mt: 2 }}
                 >
@@ -148,7 +147,7 @@ export default function ContactPage() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Card sx={{ boxShadow: 3 }}>
             <CardHeader
-              title={<Typography variant="h5">פרטי התקשרות</Typography>}
+              title={<Typography variant="h5" className="typography-heading-sm">פרטי התקשרות</Typography>}
               subheader={
                 <Typography color="text.secondary">
                   דרכים נוספות ליצור איתנו קשר.
@@ -171,19 +170,19 @@ export default function ContactPage() {
                     gap: 2,
                   }}
                 >
-                  <Mail style={{ color: "#1976d2", marginTop: 4 }} />
+                  <Mail style={{ color: "rgba(0, 0, 0, 0.6)", marginTop: 4 }} />
                   <Box>
                     <Typography fontWeight={600}>אימייל</Typography>
                     <Typography
                       component="a"
-                      href="mailto:contact@priyuvi.co.il"
+                      href="mailto:A26294255@gmail.com"
                       color="primary.main"
                       sx={{
                         textDecoration: "none",
                         "&:hover": { textDecoration: "underline" },
                       }}
                     >
-                      contact@priyuvi.co.il
+                      A26294255@gmail.com
                     </Typography>
                   </Box>
                 </Box>
@@ -194,19 +193,19 @@ export default function ContactPage() {
                     gap: 2,
                   }}
                 >
-                  <Phone style={{ color: "#1976d2", marginTop: 4 }} />
+                  <Phone style={{ color: "rgba(0, 0, 0, 0.6)", marginTop: 4 }} />
                   <Box>
                     <Typography fontWeight={600}>טלפון</Typography>
                     <Typography
                       component="a"
-                      href="tel:+972501234567"
+                      href="tel:+972533167536"
                       color="primary.main"
                       sx={{
                         textDecoration: "none",
                         "&:hover": { textDecoration: "underline" },
                       }}
                     >
-                      050-1234567
+                      053-3167536
                     </Typography>
                   </Box>
                 </Box>
@@ -217,10 +216,10 @@ export default function ContactPage() {
                     gap: 2,
                   }}
                 >
-                  <MapPin style={{ color: "#1976d2", marginTop: 4 }} />
+                  <MapPin style={{ color: "rgba(0, 0, 0, 0.6)", marginTop: 4 }} />
                   <Box>
                     <Typography fontWeight={600}>כתובת (לאיסוף עצמי)</Typography>
-                    <Typography>רחוב הפירות 1, ישוב לדוגמה, שומרון</Typography>
+                    <Typography>רחוב רבי מאיר מפרימישלן 32, עמנואל, שומרון</Typography>
                     <Typography
                       variant="body2"
                       color="text.secondary"

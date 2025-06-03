@@ -31,7 +31,7 @@ export default function HeroSection() {
         }}
       />
       <Box sx={{ position: 'relative', zIndex: 2, p: 3, maxWidth: '600px' }}>
-        <Typography variant="h1" sx={{ fontWeight: 'bold', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+        <Typography variant="h1" className="typography-heading-lg" sx={{ fontWeight: 'bold', textShadow: '0 2px 4px rgba(0,0,0,0.5)', fontSize: { xs: '2rem', md: '2.8rem' } }}>
           פריויו – מגשי פירות מעוצבים בהתאמה אישית
         </Typography>
         <Typography variant="h5" sx={{ mt: 2, fontWeight: '300', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
@@ -39,7 +39,7 @@ export default function HeroSection() {
         </Typography>
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           size="large"
           sx={{ mt: 4, px: 4, py: 2, boxShadow: 3, transform: 'scale(1)', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}
           component={Link}

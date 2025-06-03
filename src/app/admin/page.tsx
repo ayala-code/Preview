@@ -6,6 +6,7 @@ import { Visibility, Edit, Delete, FilterList, CalendarToday, CheckCircleOutline
 import type { Order, PlatterType } from "@/types";
 import { cn } from "@/lib/utils"; // Added import for cn
 import { Card, CardHeader, CardContent, Button, TextField, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, Box } from "@mui/material";
+import PageHeader from '@/components/ui/page-header';
 
 type OrderLike = Omit<Order, 'deliveryDate' | 'createdAt' | 'updatedAt'> & {
   deliveryDate: string;
@@ -156,15 +157,12 @@ export default function AdminPage() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <Box component="header" sx={{ textAlign: 'center', p: '32px 0', bgcolor: 'rgba(25, 118, 210, 0.1)', borderRadius: 2 }}>
-        <Box component="h1" sx={{ fontSize: 32, fontWeight: 700, color: '#1976d2' }}>ניהול הזמנות</Box>
-        <Box component="p" sx={{ mt: 1, fontSize: 18, color: '#333' }}>מעקב וניהול הזמנות לקוחות.</Box>
-      </Box>
+      <PageHeader title="ניהול הזמנות" subtitle="מעקב וניהול הזמנות לקוחות." />
       <Card sx={{ boxShadow: 3 }}>
         <CardHeader
           title={
             <Box sx={{ display: 'flex', alignItems: 'center', fontSize: 24 }}>
-              <FilterList sx={{ mr: 1, ml: 1, fontSize: 28, color: '#1976d2' }} />
+              <FilterList sx={{ mr: 1, ml: 1, fontSize: 28, color: 'rgba(0, 0, 0, 0.6)' }} />
               סינון וחיפוש הזמנות
             </Box>
           }
